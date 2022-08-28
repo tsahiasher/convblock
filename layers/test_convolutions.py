@@ -25,16 +25,16 @@ class Test_conv:
 
     def test_weight_init2(self):
         conv_layer = ConvLayer(in_channels=256, out_channels=512, conv_init='kaiming')
-        assert np.mean(conv_layer.conv_layer.weight.detach().numpy()) == pytest.approx(0, abs=1e-4)
+        assert torch.isclose(torch.mean(conv_layer.conv_layer.weight), torch.Tensor([0]), atol=1e-4)
         shape = conv_layer.conv_layer.weight.shape
         n = shape[1] * shape[2] * shape[3]
-        assert np.std(conv_layer.conv_layer.weight.detach().numpy()) == pytest.approx(np.sqrt(2 / n), abs=1e-4)
+        assert torch.isclose(torch.std(conv_layer.conv_layer.weight), torch.Tensor([np.sqrt(2 / n)]), atol=1e-4)
         assert torch.count_nonzero(conv_layer.conv_layer.bias) == 0
 
     def test_weight_init3(self):
         conv_layer = ConvLayer(in_channels=256, out_channels=512, conv_init='xavier')
-        assert np.mean(conv_layer.conv_layer.weight.detach().numpy()) == pytest.approx(0, abs=1e-4)
-        assert np.std(conv_layer.conv_layer.weight.detach().numpy()) == pytest.approx(0, abs=1e-1)
+        assert torch.isclose(torch.mean(conv_layer.conv_layer.weight), torch.Tensor([0]), atol=1e-4)
+        assert torch.isclose(torch.std(conv_layer.conv_layer.weight), torch.Tensor([0]), atol=1e-1)
         assert torch.count_nonzero(conv_layer.conv_layer.bias) == 0
 
     def test_forward1(self):

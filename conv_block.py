@@ -136,9 +136,7 @@ class ConvBlock(nn.Module):
                 raise ValueError("Unrecognised layer {}".format(layer_name))
 
         self.layers = nn.Sequential(*self.layers)
-        # self.fc1 = torch.nn.Linear(out_channels * 14 * 14, 10, bias=True)
 
     def forward(self, x):
         out = self.layers(x)
-        # out = self.fc1(out.view(out.size(0), -1))
         return out
