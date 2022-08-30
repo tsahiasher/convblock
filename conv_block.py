@@ -7,6 +7,7 @@ from layers.activations import ActivationLayer
 from layers.upsamples import UpSampleLayer
 from layers.dropouts import DropOutLayer
 from layers.batchnorms import BatchNormLayer
+from layers.fullyconnected import FullyConnected
 import re
 
 
@@ -29,7 +30,10 @@ class ConvBlock(nn.Module):
                  upsample=None,
                  dropout=0.0,
                  conv_init='kaiming',
-                 bn_init='default'):
+                 bn_init='default',
+                 in_features=None,
+                 out_features=None,
+                 fc_init='default'):
 
         """This class allows chaining of common layers, operations, etc. making it easier and quicker to prototype new network architectures.
 
@@ -129,8 +133,13 @@ class ConvBlock(nn.Module):
             elif layer_name == 'Drop':
                 self.layers.append(DropOutLayer(p=dropout))
 
+
             elif layer_name == 'Up':
+
                 self.layers.append(UpSampleLayer(scale_factor=upsample))
+
+            elif layer_name == 'Fc':
+                self.layers.append(FullyConnected(in_features=in_features*out_channels, out_features=out_features, fc_init=fc_init))
 
             else:
                 raise ValueError("Unrecognised layer {}".format(layer_name))
