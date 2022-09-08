@@ -44,7 +44,7 @@ class ConvLayer(nn.Module):
                     self.padding = (0,) * len(kernel_size)
             else:
                 for ii in range(len(kernel_size)):
-                    self.padding += ((dilation[ii] * (kernel_size[ii] - 1)),)
+                    self.padding = (dilation[0] * ((kernel_size[0] - 1) // 2), dilation[1] * (kernel_size[1] - 1))
 
             # Full 2d conv
             if separable is False:
@@ -79,6 +79,6 @@ class ConvLayer(nn.Module):
     def forward(self, input):
         output = self.conv_layer(input)
         if self.causal:
-            output = output[..., 0:-self.padding[0], 0:-self.padding[1]]
+            output = output[..., self.dilation[-1] * (self.kernel_size[1] - 1):]
 
         return output

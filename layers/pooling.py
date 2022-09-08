@@ -14,10 +14,10 @@ class PoolLayer(nn.Module):
 
         if tensor_type == '2d':
             if pool_type == 'Avg':
-                self.pool = nn.MaxPool2d(kernel_size=pool_kernel, stride=pool_stride)
+                self.pool = nn.AvgPool2d(kernel_size=pool_kernel, stride=pool_stride)
 
             elif pool_type == 'Max':
-                self.pool = nn.AvgPool2d(kernel_size=pool_kernel, stride=pool_stride)
+                self.pool = nn.MaxPool2d(kernel_size=pool_kernel, stride=pool_stride)
 
     def forward(self, input):
         output = self.pool(input)

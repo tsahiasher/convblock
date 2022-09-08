@@ -135,7 +135,6 @@ class ConvBlock(nn.Module):
 
 
             elif layer_name == 'Up':
-
                 self.layers.append(UpSampleLayer(scale_factor=upsample))
 
             elif layer_name == 'Fc':

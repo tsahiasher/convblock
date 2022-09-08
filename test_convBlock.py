@@ -57,7 +57,7 @@ class Test_convBlock:
         torch.manual_seed(1234)
         conv_block = ConvBlock(in_channels=1, out_channels=32, conv_block='MaxConvBnDrop', pool_kernel=2, pool_stride=2, padding='SAME', causal=True)
         input = torch.rand(64, 1, 28, 28) * 20 - 10
-        # x = cb(input); torch.save(x,'y_test_forward.pt')
+        # x = conv_block(input); torch.save(x,'y_test_forward.pt')
         y = torch.load('y_test_forward.pt')
         assert torch.allclose(conv_block(input), y, atol=1e-5), "Wrong convolution result"
 
